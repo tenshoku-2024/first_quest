@@ -1,0 +1,8 @@
+{
+	"module":"./dist/index.js",
+	"types":"./dist/index.d.ts",
+	"scripts":{
+		"build":"mkdir -p target && wasm-pack build --release --out-dir ./dist --out-name index --no-pack",
+		"test":"mkdir -p target && cargo test"
+	}
+}
