@@ -25,12 +25,15 @@ const emit=defineEmits(
 const amount=ref('0');
 
 const facade=new symbolSdk.facade.SymbolFacade('testnet');
+const src_private=new symbolSdk.PrivateKey(globals.value.chat.secret_key);
+const src_pair=new symbolSdk.symbol.KeyPair(src_private);
+const src_address=facade.network.publicKeyToAddress(src_pair.publicKey);
 
 const mosaics=ref(<any[]|undefined>undefined);
 const mosaic=ref('');
 (async()=>{
 	const json=await fetch(
-		nodeOrigin+'/accounts/'+props.recipientAddress,
+		nodeOrigin+'/accounts/'+src_address.toString(),
 	)
 		.then(response=>response.json());
 	mosaics.value=await Promise.all(
@@ -56,9 +59,6 @@ async function announce(){
 	const divisibility=mosaics.value.filter(e=>e.id==mosaic.value)[0].divisibility;
 	const lastIndexOfDot=amount.value.lastIndexOf('.');
 	const positionOfDot=lastIndexOfDot<0?0:(-1*(lastIndexOfDot-amount.value.length+1));
-
-	const src_private=new symbolSdk.PrivateKey(globals.value.chat.secret_key);
-	const src_pair=new symbolSdk.symbol.KeyPair(src_private);
 
 	const deadline=new symbolSdk.symbol.NetworkTimestamp(facade.network.fromDatetime(new Date)).addSeconds(300).timestamp;
 
