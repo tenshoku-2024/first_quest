@@ -47,7 +47,7 @@ if(pubsub===undefined){
 	heliaCbor=dagCbor(helia);
 
 	pubsub.subscribe(globals.value.chat.symbolAddress);
-	pubsub.onmessage=async(message:Uint8Array)=>{
+	pubsub.onmessage=async(message:Uint8Array,raw:any)=>{
 		const timestamp=new Date().valueOf();
 		const cidCbor=CID.decode(message);
 		if(cidCbor.multihash.code===identity.code){
