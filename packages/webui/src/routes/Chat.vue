@@ -25,11 +25,9 @@ const messages=ref<any[]>(
 	]
 );
 
-const {
-	symp2p,
-}=globals.value;
 
-let helia:any;
+const helia:any=globals.value.helia;
+const pubsub:any=globals.value.chat.pubsub;
 let heliaStrings:any;
 let heliaCbor:any;
 
@@ -37,16 +35,14 @@ function scroll(){
 	log.value.scrollTo(0,log.value.scrollHeight);
 }
 
-if(symp2p===undefined){
+if(pubsub===undefined){
 	router.push('/');
 }else{
-	helia=symp2p.helia;
-
 	heliaStrings=strings(helia);
 	heliaCbor=dagCbor(helia);
 
-	symp2p.subscribe(globals.value.symbolAddress);
-	symp2p.onmessagefromsymbol=async(message:Uint8Array)=>{
+	pubsub.subscribe(globals.value.chat.symbolAddress);
+	pubsub.onmessage=async(message:Uint8Array)=>{
 		const timestamp=new Date().valueOf();
 		const cidCbor=CID.decode(message);
 		if(cidCbor.multihash.code===identity.code){
@@ -83,7 +79,7 @@ async function submit(){
 		},
 		addoptions,
 	);
-	symp2p.symbolPubSub.publish(globals.value.symbolAddress,payload.bytes);
+	pubsub.publish(globals.value.chat.symbolAddress,payload.bytes);
 }
 
 </script>

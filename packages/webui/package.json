@@ -9,10 +9,12 @@
 	"dependencies":{
 		"@helia/dag-cbor":"^3.0.0",
 		"@helia/strings":"^3.0.0",
+		"@libp2p/bootstrap":"^10.0.16",
 		"@mdi/js":"^7.4.47",
 		"@esbuild-plugins/node-globals-polyfill":"^0.2.3",
 		"assert":"*",
 		"buffer":"*",
+		"helia":"^4.0.1",
 		"multiformats":"^13.1.0",
 		"pubsub-symbol-mempool":"file:packages/pubsub-symbol-mempool",
 		"symbol-crypto-wasm-web":"^0.1.1",

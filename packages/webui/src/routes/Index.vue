@@ -7,7 +7,7 @@ import {
 
 import {useRouter} from 'vue-router';
 
-import {Symp2p} from 'symp2p';
+import {SymbolPubSub} from 'pubsub-symbol-mempool';
 
 const router=useRouter();
 const globals:any=inject('globals');
@@ -15,13 +15,13 @@ const secret_key=ref('');
 const node_origin=ref('https://localhost:3001');
 
 function connect(){
-	const symp2p=new Symp2p(secret_key.value);
+	const pubsub=new SymbolPubSub(secret_key.value);
+	globals.value.chat.pubsub=pubsub;
 	(async()=>{
-		await symp2p.start([node_origin.value]);
+		await pubsub.start([node_origin.value]);
+		pubsub.subscribe(globals.value.symbolAddress)
 		router.push('/chat');
-		symp2p.subscribe(globals.value.symbolAddress)
 	})();
-	globals.value.symp2p=symp2p;
 }
 </script>
 
