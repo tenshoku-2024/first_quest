@@ -1,12 +1,11 @@
 
 module.exports={
 	size:'10in,5.625in',
-	theme:'file:./themes/theme.scss',
+	theme:'./themes/theme.css',
 	entry:[
 		'index.md',
 	],
 	output:[
 		'slides.pdf',
 	],
-	workspaceDir:'.vivliostyle',
 };

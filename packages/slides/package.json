@@ -1,5 +1,8 @@
 {
 	"scripts":{
-		"build":"vivliostyle build"
+		"build":"sass themes/theme.scss themes/theme.css &&vivliostyle build"
+	},
+	"dependencies":{
+		"sass":"^1.71.1"
 	}
 }

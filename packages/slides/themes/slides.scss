@@ -1,0 +1,19 @@
+
+@page{
+	margin:0;
+	background-color:#000000;
+}
+
+:root{
+	color:#ffffff;
+	font-size:18pt;
+	font-family: Noto Serif CJK JP, Serif;
+}
+
+h1.cover{
+	font-family: Noto Serif CJK JP Black, Serif;
+}
+
+h1,h2,h3{
+	break-before: page;
+}
