@@ -1,0 +1,10 @@
+{
+	"type":"module",
+	"scripts":{
+		"build":"ts-node ./build.ts"
+	},
+	"devDependencies":{
+		"@types/node":"*",
+		"ts-node":"^10.9.2"
+	}
+}

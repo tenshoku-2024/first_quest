@@ -1,0 +1,39 @@
+\section{ブラウザでSymbol SDK v3を使う}
+
+\begin{frame}{Vueで使うと全面白の画面になる問題}
+	vite.config.jsでsymbol-crypto-wasm-nodeをsymbol-crypto-wasm-webに差し替える
+	\begin{itemize}
+		\item \twemoji{lion} @toshi.symbolさん (twitter:@toshiya\_ma)記事の紹介ありがとうございました！
+		\begin{itemize}
+			\item 参考：Next.jsでsymbol-sdk@3.1.0を使用してトランザクションを送信してみる\url{https://qiita.com/planethouki/items/952d97da6e82c70fccfc}
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{transactionFactory.createがコケる問題}
+	現行の最新の3.1.0ではなく3.1.0-testを使う
+	\begin{itemize}
+		\item このバージョンで修正されている模様
+		\item -testって書いてあるだけになんか抵抗が有る……
+		\begin{itemize}
+			\item そもそも無理やり動かしているので看過
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{秘密鍵の生成でコケる問題}
+	cryptoを自作のものに差し替え
+	\begin{itemize}
+		\item 秘密鍵の生成にはrandomBytesを使う模様
+		\begin{itemize}
+			\item そこだけ対応
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{公開鍵からのアドレスの導出でコケる問題}
+	ripemd160-jsをripemd160の代わりに使えるように加工＋差し替え
+	\begin{itemize}
+		\item どうもreadable-streamが怪しい印象
+	\end{itemize}
+\end{frame}

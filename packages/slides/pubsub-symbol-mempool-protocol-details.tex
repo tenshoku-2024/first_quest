@@ -1,0 +1,95 @@
+\section{pubsub-symbol-mempoolでのプロトコルの詳細}
+
+\begin{frame}{通信の流れ}
+	\begin{figure}
+		\begin{tikzpicture}
+			\node[align=center] (APINode1) at (5,4) {%
+				\resizebox{2em}{!}{\twemoji{woman farmer}}\\%
+				(API)Node%
+			};
+			\node[align=center] (APINode2) at (5,0) {%
+				\resizebox{2em}{!}{\twemoji{woman farmer}}\\%
+				(API)Node%
+			};
+			\node[align=center] (Subscriber1) at (10,4) {%
+				\resizebox{2em}{!}{\twemoji{fox}}\\%
+				Subscriber%
+			};
+			\node[align=center] (Subscriber2) at (10,0) {%
+				\resizebox{2em}{!}{\twemoji{fox}}\\%
+				Subscriber%
+			};
+			\node[align=center] (Publisher) at (0,0) {%
+				\resizebox{2em}{!}{\twemoji{fox}}\\%
+				Publisher%
+			};
+			\visible<1>{
+				\node[align=center] (Topic) at (0,4) {%
+					Publisherから\\%
+					Subscriberたちに\\%
+					バイト列を送りたい%
+				};
+			}
+			\visible<2>{
+				\node[align=center] at (0,4) {%
+					\small{宛先のアドレスを合意しておく}\\%
+					\footnotesize{(e.g.,\texttt{TCHAT2...C7GNA})}\\%
+				};
+			}
+			\visible<3>{
+				\node[align=center] at (0,4) {%
+					\small{購読したいアドレスの\alert{未確認の}}\\%
+					\small{トランザクションを購読する}\\%
+				};
+				\draw[latex-latex,ultra thick]
+				(Subscriber1)
+				edge node[above,align=center] {%
+					\footnotesize{\texttt{unconfirmedAdded/TCHAT2...C7GNA}}\\%
+					WebSocket%
+				}
+				(APINode1);
+				\draw[latex-latex,ultra thick]
+				(Subscriber2)
+				edge node[above,align=center] {%
+					\footnotesize{\texttt{unconfirmedAdded/TCHAT2...C7GNA}}\\%
+					WebSocket%
+				}
+				(APINode2);
+			}
+			\visible<4-6>{
+				\node[align=center] at (0,4) {%
+					\footnotesize{Transfer}\\%
+					\footnotesize{Publisher$\to$TCHAT2...C7GNA}\\%
+					\footnotesize{message:(バイト列)}%
+				};
+			}
+			\visible<4>{
+				\draw[-latex,ultra thick]
+					(Publisher)
+					edge node[above left,align=center] {%
+						アナウンス%
+					}
+					(APINode1);
+			}
+			\visible<5>{
+				\draw[-latex,ultra thick]
+				(APINode1)
+				edge node[right] {拡散}
+				(APINode2);
+			}
+			\visible<6>{
+				\draw[-latex,ultra thick]
+				(APINode1)
+				edge node[above] {届く}
+				(Subscriber1);
+				\draw[-latex,ultra thick]
+				(APINode2)
+				edge node[above] {届く}
+				(Subscriber2);
+			}
+			\visible<7>{
+				\node[align=center] at (0,4) {やったね\twemoji{sparkles}};
+			}
+		\end{tikzpicture}
+	\end{figure}
+\end{frame}
