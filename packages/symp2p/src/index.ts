@@ -112,6 +112,7 @@ export class Symp2p{
 			.helia
 			.libp2p
 			.getMultiaddrs()
+			.filter((e:Multiaddr)=>e.protos().filter((f:any)=>f.name==='webrtc').length==0)
 			.filter((e:Multiaddr)=>e.protos().filter((f:any)=>f.name==='p2p-circuit').length>0)
 			.filter((e:Multiaddr)=>e.protos().filter((f:any)=>f.name==='dns4'||f.name==='dns6').length>0)
 			.map((e:Multiaddr)=>e.toString())
