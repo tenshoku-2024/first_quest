@@ -56,7 +56,7 @@ async function advertise(){
 			作りかけフライヤー
 		</h3>
 		<div>
-			チャットです
+			チャットです。WANを越えてチャットができない問題が未修正です。
 		</div>
 		<div class="">
 			秘密鍵:<input v-model="secret_key" class="rounded border-blue-500 border-2" type="text"/>

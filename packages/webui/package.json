@@ -16,6 +16,7 @@
 		"multiformats":"^13.1.0",
 		"pubsub-symbol-mempool":"file:packages/pubsub-symbol-mempool",
 		"symbol-crypto-wasm-web":"^0.1.1",
+		"symp2p":"file:packages/symp2p",
 		"vue":"^3.4.19",
 		"vue-router":"^4.2.5"
 	},
