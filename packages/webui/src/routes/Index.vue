@@ -27,27 +27,6 @@ function connect(){
 
 <template>
 	<header>
-		<div class="min-h-screen w-screen bg-gradient-to-br from-fuchsia-900 to-black grid grid-rows-2 grid-cols-1 items-center">
-			<div>
-				<h2 class="text-8xl font-black bg-gradient-to-br from-cyan-300 to-blue-500 inline-block text-transparent bg-clip-text">
-					Gossipsubをなる速で
-				</h2>
-			</div>
-			<div class="text-white p-8 text-[16pt] w-1/2 justify-self-end">
-				<p>
-					「ただ単にLibp2pとGossipsubでPubSubをしてもpublishもsubscribeもできない！？なぜ……」
-				</p>
-				<p>
-					そんな経験ありませんか？
-				</p>
-				<p>
-					InsufficientPeersに悩まされてませんか？
-				</p>
-				<p>
-					この問題をSymbolを使って迂回しました。
-				</p>
-			</div>
-		</div>
 		<div class="min-h-screen bg-gradient-to-br to-cyan-900 from-black grid grid-rows-4 grid-cols-1 items-center">
 			<div>
 				<h2 class="text-8xl font-black bg-gradient-to-br from-cyan-300 to-blue-500 inline-block text-transparent bg-clip-text">

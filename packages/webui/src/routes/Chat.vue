@@ -10,32 +10,28 @@ import {useRouter} from 'vue-router';
 import {strings} from '@helia/strings';
 import {dagCbor} from '@helia/dag-cbor';
 import {CID} from 'multiformats/cid';
+import {identity} from 'multiformats/hashes/identity';
 
 const router=useRouter();
 const globals:any=inject('globals')
 const log=ref();
-const discoverable=ref('')
-const numParticipants=ref(1);
 const message=ref('');
 const messages=ref<any[]>(
 	[
 		{
 			timestamp:new Date(0).valueOf(),
-			message:'このはチャット一般公開ですが自動でSymbolのブロックチェーンに書き込まれるようには作っていません。代わりにIPFSで配信されます。',
+			message:'このはチャット一般公開です。極力そうならないようには作りましたが時々Symbolのブロックチェーンに内容またはそのハッシュが書き込まれる可能性があります。',
 		}
 	]
 );
 
 const {
-	libp2pPubsubTopic,
 	symp2p,
 }=globals.value;
 
-let helia;
+let helia:any;
 let heliaStrings:any;
 let heliaCbor:any;
-let libp2p:any;
-let pubsub:any;
 
 function scroll(){
 	log.value.scrollTo(0,log.value.scrollHeight);
@@ -45,85 +41,55 @@ if(symp2p===undefined){
 	router.push('/');
 }else{
 	helia=symp2p.helia;
-	libp2p=helia.libp2p;
-	pubsub=libp2p.services.pubsub;
 
 	heliaStrings=strings(helia);
 	heliaCbor=dagCbor(helia);
 
 	symp2p.subscribe(globals.value.symbolAddress);
-	pubsub.subscribe(globals.value.symbolAddress);
-
-	setInterval(
-		()=>{
-			numParticipants.value=pubsub.getSubscribers(libp2pPubsubTopic).length+1;
-			const libp2pIsDiscoverable=libp2p
-				.getMultiaddrs()
-				.filter((e:any)=>e.protos().filter((f:any)=>f.name==='p2p-circuit').length>0)
-				.filter((e:any)=>e.protos().filter((f:any)=>f.name==='dns4'||f.name==='dns6').length>0)
-				.length>0;
-			if(libp2pIsDiscoverable){
-				discoverable.value='見つけてもらう準備OK';
-			}else{
-				discoverable.value='見つけてもらう準備KO';
-				symp2p.dialLibp2pNodes();
-			}
-		},
-		1000,
-	);
-
-	pubsub.addEventListener(
-		'message',
-		async(ev:any)=>{
-			const message={
-				timestamp:new Date().valueOf(),
-				message:'',
-			};
-			const payload=await heliaCbor.get(CID.decode(ev.detail.data));
-			message.message=await heliaStrings.get(payload.message[0]);
-			messages.value.push(message);
-			scroll();
+	symp2p.onmessagefromsymbol=async(message:Uint8Array)=>{
+		const timestamp=new Date().valueOf();
+		const cidCbor=CID.decode(message);
+		if(cidCbor.multihash.code===identity.code){
+			await helia.blockstore.put(cidCbor,cidCbor.multihash.digest);
 		}
-	)
+		const cbor=await heliaCbor.get(cidCbor);
+		const cidMsg=cbor.message[0];
+		if(cidMsg.multihash.code===identity.code){
+			await helia.blockstore.put(cidMsg,cidMsg.multihash.digest);
+		}
+		const msg=await heliaStrings.get(cidMsg);
+		messages.value.push(
+			{
+				timestamp,
+				message:msg,
+			},
+		);
+		scroll();
+	};
 }
 
 async function submit(){
-	messages.value.push(
-		{
-			timestamp:new Date().valueOf(),
-			message:message.value,
-		},
-	);
+	const addoptions=message.value.length<200?{
+		hasher:identity,
+	}:undefined;
 	const payload=await heliaCbor.add(
 		{
 			message:[
-				await heliaStrings.add(message.value),
+				await heliaStrings.add(
+					message.value,
+					addoptions,
+				),
 			],
 		},
+		addoptions,
 	);
-	await pubsub.publish(libp2pPubsubTopic,payload.bytes);
-	scroll();
-}
-
-async function advertise(){
-	await symp2p.advertise();
+	symp2p.symbolPubSub.publish(globals.value.symbolAddress,payload.bytes);
 }
 
 </script>
 
 <template>
 	<div class="w-screen h-screen flex flex-col">
-		<div class="grow-0 border-b-2 border-blue-300 w-screen p-2">
-			<span>
-				参加者数：{{numParticipants}}
-			</span>
-			&nbsp;
-			<button @click="advertise" class="rounded-xl p-[1px] border-2 border-blue-500">
-				見つけてもらう
-			</button>
-			&nbsp;
-			{{discoverable}}
-		</div>
 		<div ref="log" class="overflow-scroll grow flex flex-col bg-gradient-to-br from-cyan-200 to-indigo-200">
 			<ul class="max-w-[600px] grow self-center bg-white/65 space-y-4">
 				<li v-for="message in messages" class="flex flex-col">
