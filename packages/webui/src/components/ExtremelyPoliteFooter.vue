@@ -3,7 +3,7 @@
 </script>
 
 <template>
-	<footer class="text-white bg-gradient-to-br from-blue-700 to-cyan-500 max-w-[1200px]">
+	<footer class="text-white bg-gradient-to-br from-blue-700 to-cyan-500">
 		<h2 class="text-6xl p-10">
 			<router-link to="/" class="underline">
 				まい月の成果物
