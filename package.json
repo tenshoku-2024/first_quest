@@ -1,4 +1,7 @@
 {
+	"scripts":{
+		"build":"npm -w packages/pubsub-symbol-mempool run build &&npm -w packages/webui run build"
+	},
 	"workspaces":[
 		"packages/*"
 	]

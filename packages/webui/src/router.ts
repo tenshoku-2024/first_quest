@@ -11,6 +11,11 @@ const router=createRouter({
 			name:'index',
 			component:()=>import('@/routes/Unimplemented.vue'),
 		},
+		{
+			path:'/:path(.*)*',
+			name:'404',
+			component:()=>import('@/routes/404.vue'),
+		},
 	],
 });
 

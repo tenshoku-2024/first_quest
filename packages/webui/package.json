@@ -8,6 +8,7 @@
 	},
 	"dependencies":{
 		"@mdi/js":"^7.4.47",
+		"pubsub-symbol-mempool":"file:packages/pubsub-symbol-mempool",
 		"vue":"^3.4.19",
 		"vue-router":"^4.2.5"
 	},
