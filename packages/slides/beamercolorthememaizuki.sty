@@ -1,0 +1,44 @@
+
+\ProvidesPackage{beamercolorthememaizuki}
+
+\RequirePackage{tikz}
+
+\definecolor{beamercolorthememaizuki@bg}{HTML}{1c1c1c}
+\definecolor{beamercolorthememaizuki@fg}{HTML}{e7e7e7}
+\definecolor{beamercolorthememaizuki@frametitlefg}{HTML}{4eecff}
+\definecolor{beamercolorthememaizuki@titlelikefg}{HTML}{33ecff}
+
+\definecolor{beamercolorthememaizuki@alertedtextfg}{HTML}{ff66cc}
+\definecolor{beamercolorthememaizuki@structurefg}{HTML}{66ccff}
+\definecolor{beamercolorthememaizuki@exampletextfg}{HTML}{66ffcc}
+
+\setbeamercolor{frametitle}{fg=beamercolorthememaizuki@frametitlefg}
+\setbeamercolor{titlelike}{fg=beamercolorthememaizuki@frametitlefg}
+
+\setbeamercolor{background canvas}{bg=beamercolorthememaizuki@bg}
+
+\setbeamercolor{normal text}{fg=beamercolorthememaizuki@fg}
+\setbeamercolor{structure}{fg=beamercolorthememaizuki@structurefg}
+\setbeamercolor{alerted text}{fg=beamercolorthememaizuki@alertedtextfg}
+\setbeamercolor{example text}{fg=beamercolorthememaizuki@exampletextfg}
+
+\setbeamercolor{item}{fg=beamercolorthememaizuki@structurefg}
+
+\newdimen\beamercolorthememaizuki@bleedlength
+\beamercolorthememaizuki@bleedlength=7mm
+
+\tikzset{
+	draw=beamercolorthememaizuki@fg,
+	text=beamercolorthememaizuki@fg,
+	fill=beamercolorthememaizuki@bg
+}
+
+\setbeamertemplate{background canvas}{%
+	\begin{tikzpicture}[remember picture,overlay]
+		\coordinate (bleed top left) at ([xshift=-\beamercolorthememaizuki@bleedlength,yshift=\beamercolorthememaizuki@bleedlength]current page.north west);
+		\coordinate (bleed bottom right) at ([xshift=\beamercolorthememaizuki@bleedlength,yshift=-\beamercolorthememaizuki@bleedlength]current page.south east);
+		\draw[fill=background canvas.bg] (bleed top left) rectangle (bleed bottom right);
+	\end{tikzpicture}%
+}
+
+\usebeamercolor{normal text}

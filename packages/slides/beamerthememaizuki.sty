@@ -1,0 +1,18 @@
+
+\ProvidesPackage{beamerthememaizuki}
+\RequirePackage{fontspec}
+
+\mode<presentation>
+
+\usefonttheme{professionalfonts}
+\usecolortheme{maizuki}
+
+\AtBeginSection[]{%
+	\begin{frame}[plain]%
+		\begin{tikzpicture}[remember picture,overlay]
+			\node[right,text width=\paperwidth] at (current page.west) {{\fontspec{Noto Serif CJK JP Black}\Large\insertsection}};
+		\end{tikzpicture}%
+	\end{frame}%
+}
+
+\mode<all>
