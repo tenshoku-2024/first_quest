@@ -7,7 +7,7 @@ import ExtremelyPoliteHeader from '@/components/ExtremelyPoliteHeader.vue';
 
 <template>
 	<ExtremelyPoliteHeader/>
-	<main>
+	<main class="min-h-screen">
 		<slot/>
 	</main>
 	<ExtremelyPoliteFooter/>

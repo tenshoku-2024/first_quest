@@ -3,13 +3,13 @@
 </script>
 
 <template>
-	<footer class="text-white bg-gradient-to-br from-blue-700 to-cyan-500">
+	<footer class="text-white bg-gradient-to-br from-blue-700 to-cyan-500 max-w-[1200px]">
 		<h2 class="text-6xl p-10">
 			<router-link to="/" class="underline">
 				まい月の成果物
 			</router-link>
 		</h2>
-		<div class="flex justify-center p-4 flex-row space-x-8">
+		<div class="lg:grid lg:grid-cols-3 space-y-4 justify-center p-4">
 			<div class="min-w-[30%]">
 				<h3 class="text-xl">
 					開発者向け

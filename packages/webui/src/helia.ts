@@ -4,6 +4,14 @@ import {
 } from '@libp2p/bootstrap';
 
 import {
+	IDBBlockstore,
+} from 'blockstore-idb';
+
+import {
+	IDBDatastore,
+} from 'datastore-idb';
+
+import {
 	createHelia,
 	libp2pDefaults,
 } from 'helia';
@@ -28,8 +36,16 @@ export async function createHeliaWithAdditionalBootstrapNodes(){
 			},
 		),
 	];
+	const blockstore=new IDBBlockstore('helia/blockstore');
+	const datastore=new IDBDatastore('helia/datastore');
+	await Promise.all([
+		blockstore.open(),
+		datastore.open(),
+	])
 	const helia=await createHelia(
 		{
+			blockstore,
+			datastore,
 			libp2p:libp2pOptions,
 		},
 	);

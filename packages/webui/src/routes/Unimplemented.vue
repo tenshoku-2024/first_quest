@@ -3,7 +3,10 @@
 import Publisher from '@/components/Publisher.vue';
 import Subscriber from '@/components/Subscriber.vue';
 import Chat from '@/components/Chat.vue';
+import TokenMetadataEdit from '@/components/TokenMetadataEdit.vue';
+import TokenMetadataView from '@/components/TokenMetadataView.vue';
 import ExtremelyPoliteLayout from '@/components/ExtremelyPoliteLayout.vue';
+
 </script>
 
 <template>
@@ -21,9 +24,8 @@ import ExtremelyPoliteLayout from '@/components/ExtremelyPoliteLayout.vue';
 			</div>
 		</div>
 		<div>
-			<h2 class="text-3xl p-2">
-				作りかけの機能
-			</h2>
+			<TokenMetadataEdit/>
+			<TokenMetadataView/>
 			<Chat/>
 			<Publisher/>
 			<Subscriber/>
