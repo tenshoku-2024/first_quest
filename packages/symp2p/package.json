@@ -1,0 +1,17 @@
+{
+	"type":"module",
+	"main":"./src/index.ts",
+	"scripts":{
+		"build":"tsc",
+		"test":"vitest run"
+	},
+	"dependencies":{
+		"@chainsafe/libp2p-gossipsub":"^12.0.0",
+		"helia":"^4.0.1",
+		"pubsub-symbol-mempool":"file:packages/pubsub-symbol-mempool"
+	},
+	"devDependencies":{
+		"vitest":"^1.3.0",
+		"typescript":"^5.3.3"
+	}
+}

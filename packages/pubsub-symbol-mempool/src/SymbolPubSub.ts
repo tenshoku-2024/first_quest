@@ -22,7 +22,7 @@ export class SymbolPubSub{
 	async start(
 		nodes:string[],
 	):Promise<void>{
-		await this.subscriber.start();
+		await this.subscriber.start(nodes);
 		this.publisher.nodes=this.subscriber.nodes;
 	}
 

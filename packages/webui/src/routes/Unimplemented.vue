@@ -2,6 +2,7 @@
 
 import Publisher from '@/components/Publisher.vue';
 import Subscriber from '@/components/Subscriber.vue';
+import Chat from '@/components/Chat.vue';
 
 </script>
 
@@ -22,6 +23,7 @@ import Subscriber from '@/components/Subscriber.vue';
 		<h2 class="text-3xl p-2">
 			作りかけの機能
 		</h2>
+		<Chat/>
 		<Publisher/>
 		<Subscriber/>
 	</div>
