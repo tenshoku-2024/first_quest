@@ -9,7 +9,7 @@ import Chat from '@/components/Chat.vue';
 <template>
 	<div class="m-4">
 		<h1 class="m-4 text-4xl">
-			いまつくってます💦
+			隠し機能
 		</h1>
 		<div>
 			<a href="/source.tar.zst">

@@ -9,6 +9,15 @@ const router=createRouter({
 		{
 			path:'/',
 			name:'index',
+			component:()=>import('@/routes/Index.vue'),
+		},
+		{
+			path:'/chat',
+			name:'chat',
+			component:()=>import('@/routes/Chat.vue'),
+		},
+		{
+			path:'/kuyou',
 			component:()=>import('@/routes/Unimplemented.vue'),
 		},
 		{
