@@ -3,7 +3,7 @@ import symbolSdk from 'symbol-sdk';
 
 export class SymbolWebSocketClient{
 
-	protected reconnectTimeout:number|undefined=undefined;
+	protected reconnectTimeout:any=undefined;
 	protected autoreconnect=true;
 	protected reconnectionDelay=2000;
 	protected endpoint:string;

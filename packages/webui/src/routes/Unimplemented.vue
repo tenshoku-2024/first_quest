@@ -1,5 +1,6 @@
 <script setup lang="ts">
 
+import Publisher from '@/components/Publisher.vue';
 import Subscriber from '@/components/Subscriber.vue';
 
 </script>
@@ -21,6 +22,7 @@ import Subscriber from '@/components/Subscriber.vue';
 		<h2 class="text-3xl p-2">
 			作りかけの機能
 		</h2>
+		<Publisher/>
 		<Subscriber/>
 	</div>
 </template>
