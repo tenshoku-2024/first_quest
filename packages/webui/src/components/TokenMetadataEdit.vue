@@ -277,6 +277,9 @@ async function create(){
 			(N)FTを作る
 		</h3>
 		<div>
+			おすすめの設定で埋めておきました
+		</div>
+		<div>
 			ネットワーク
 			<select v-model="network">
 				<option value="testnet">
@@ -314,17 +317,26 @@ async function create(){
 			大きさあたりの手数料
 			<input v-model="feePerSize" type="text" class="border-2 border-blue-500"/>
 		</div>
+		<h4 class="text-xl p-2">
+			Mosaicの定義
+		</h4>
 		<div>
 			nonce
 			<input v-model="nonce" type="text"  class="border-2 border-blue-500"/>
+			(毎回変える)
 		</div>
 		<div>
 			mosaicId
 			<input v-model="mosaicId" disabled type="text"  class="border-2 border-blue-500"/>
+			(自動で決まる)
 		</div>
 		<div>
 			divisibility
 			<input v-model="divisibility" type="text"  class="border-2 border-blue-500"/>
+			(数量の小数点以下の桁数)
+		</div>
+		<div>
+			(わかんなければ全部チェックつけておけば多分後悔しない)
 		</div>
 		<div>
 			supplyMutable
@@ -345,20 +357,24 @@ async function create(){
 		<div>
 			supply
 			<input v-model="supply" type="text" class="border-2 border-blue-500"/>
+			(初期Mintの数量)
 		</div>
-
+		<h4 class="text-xl p-2">
+			トークンの内容
+		</h4>
 		<div>
-			題目
+			(N)FT題目
 			<input v-model="title" class="border-2 border-blue-500"/>
 		</div>
 		<div>
 			MIME type
 			<input v-model="mimeType" type="text" class="border-2 border-blue-500"/>
+			(ファイルをドロップしたときにだいたい自動で入る)
 		</div>
 		<template v-if="true">
 			<div
 				class="border-2 border-blue-500 flex justify-center items-center min-h-[200px]" @dragover.prevent="()=>{}" @drop.prevent="ondrop">
-				ここにドロップ
+				ここにファイルかフォルダをドロップ
 			</div>
 		</template>
 		<template v-else>
