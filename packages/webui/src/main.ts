@@ -9,14 +9,27 @@ import {
 import App from '@/App.vue';
 import router from '@/router.ts';
 
+import {createHeliaWithAdditionalBootstrapNodes} from '@/helia.ts';
+
 import '@/index.css';
 
 const app=createApp(App);
+const globals=shallowRef(
+	<any>{
+		chat:{
+			symbolAddress:'TCHAT2MF5MQLZJQYGSLHJIHU424P3QJGWLC7GNA',
+			pubsub:undefined,
+		},
+	},
+);
+
+(async()=>{
+	globals.value.helia=await createHeliaWithAdditionalBootstrapNodes();
+})();
 
 app.use(router);
-app.provide('globals',shallowRef({
-	symbolAddress:'TCHAT2MF5MQLZJQYGSLHJIHU424P3QJGWLC7GNA',
-	libp2pPubsubTopic:'TCHAT2MF5MQLZJQYGSLHJIHU424P3QJGWLC7GNA',
-	symp2p:undefined,
-}));
+app.provide(
+	'globals',
+	globals,
+);
 app.mount('#app');

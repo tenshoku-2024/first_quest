@@ -30,8 +30,24 @@ export default defineConfig({
 	],
 	resolve:{
 		alias:{
-			'symbol-crypto-wasm-node':fileURLToPath(new URL('../../node_modules/symbol-crypto-wasm-web/symbol_crypto_wasm.js',import.meta.url)),
-			'@':fileURLToPath(new URL('./src',import.meta.url)),
+			'symbol-crypto-wasm-node':fileURLToPath(
+				new URL(
+					'../../node_modules/symbol-crypto-wasm-web/symbol_crypto_wasm.js',
+					import.meta.url,
+				),
+			),
+			'ripemd160':fileURLToPath(
+				new URL(
+					'../../node_modules/ripemd160-a-strengthened-version-of-ripemd/dist/index.js',
+					import.meta.url,
+				),
+			),
+			'@':fileURLToPath(
+				new URL(
+					'./src',
+					import.meta.url,
+				),
+			),
 		},
 	},
 	build:{

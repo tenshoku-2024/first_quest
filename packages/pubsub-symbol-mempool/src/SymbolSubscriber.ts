@@ -10,7 +10,7 @@ export class SymbolSubscriber{
 
 	public nodes:string[]=[];
 	private ws:SymbolWebSocketClient[]=[];
-	public onmessage=(_:any)=>{};
+	public onmessage=(_1:any,_2:any)=>{};
 	private messages:string[]=[];
 
 	public constructor(
@@ -25,7 +25,7 @@ export class SymbolSubscriber{
 			this.messages.push(hash);
 			this.messages=this.messages.splice(-5);
 			if(msg.data.transaction.message!==undefined){
-				this.onmessage(hexToUint8Array(msg.data.transaction.message));
+				this.onmessage(hexToUint8Array(msg.data.transaction.message),msg);
 			}
 		}
 	}

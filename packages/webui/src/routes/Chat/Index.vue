@@ -11,42 +11,58 @@ import {strings} from '@helia/strings';
 import {dagCbor} from '@helia/dag-cbor';
 import {CID} from 'multiformats/cid';
 import {identity} from 'multiformats/hashes/identity';
+import symbolSdk from 'symbol-sdk';
+
+import TransferTransaction from '@/components/TransferTransaction.vue';
+import Modal from '@/components/Modal.vue';
+import ExtremelyPoliteHeader from '@/components/ExtremelyPoliteHeader.vue';
 
 const router=useRouter();
 const globals:any=inject('globals')
+const recipientAddress=ref('');
+const transferTransactionModalIsOpen=ref(false);
 const log=ref();
 const message=ref('');
 const messages=ref<any[]>(
 	[
 		{
 			timestamp:new Date(0).valueOf(),
-			message:'このはチャット一般公開です。極力そうならないようには作りましたが時々Symbolのブロックチェーンに内容またはそのハッシュが書き込まれる可能性があります。',
-		}
-	]
+			signerAddress:globals.value.chat.symbolAddress,
+			message:'このはチャット一般公開です。時々Symbolのブロックチェーンに内容またはそのハッシュが書き込まれる可能性があります。',
+		},
+	],
 );
 
-const {
-	symp2p,
-}=globals.value;
 
-let helia:any;
+const helia:any=globals.value.helia;
+const pubsub:any=globals.value.chat.pubsub;
+const facade=new symbolSdk.facade.SymbolFacade('testnet');
 let heliaStrings:any;
 let heliaCbor:any;
 
 function scroll(){
-	log.value.scrollTo(0,log.value.scrollHeight);
+	setTimeout(
+		()=>{
+			log.value.scrollTo(0,log.value.scrollHeight);
+		},
+		100,
+	);
 }
 
-if(symp2p===undefined){
-	router.push('/');
+if(pubsub===undefined){
+	router.push('/chat/login');
 }else{
-	helia=symp2p.helia;
-
 	heliaStrings=strings(helia);
 	heliaCbor=dagCbor(helia);
 
-	symp2p.subscribe(globals.value.symbolAddress);
-	symp2p.onmessagefromsymbol=async(message:Uint8Array)=>{
+	pubsub.subscribe(globals.value.chat.symbolAddress);
+	pubsub.onmessage=async(message:Uint8Array,raw:any)=>{
+		const signerAddress=facade.network.publicKeyToAddress(
+			new symbolSdk.PublicKey(
+				raw.data.transaction.signerPublicKey,
+			),
+		)
+			.toString();
 		const timestamp=new Date().valueOf();
 		const cidCbor=CID.decode(message);
 		if(cidCbor.multihash.code===identity.code){
@@ -61,6 +77,7 @@ if(symp2p===undefined){
 		messages.value.push(
 			{
 				timestamp,
+				signerAddress,
 				message:msg,
 			},
 		);
@@ -83,18 +100,32 @@ async function submit(){
 		},
 		addoptions,
 	);
-	symp2p.symbolPubSub.publish(globals.value.symbolAddress,payload.bytes);
+	pubsub.publish(globals.value.chat.symbolAddress,payload.bytes);
+	message.value='';
+}
+
+function onsigneraddressclick(signerAddress:string){
+	recipientAddress.value=signerAddress;
+	transferTransactionModalIsOpen.value=true;
+}
+
+function announce(){
+	transferTransactionModalIsOpen.value=false;
 }
 
 </script>
 
 <template>
 	<div class="w-screen h-screen flex flex-col">
+		<ExtremelyPoliteHeader/>
 		<div ref="log" class="overflow-scroll grow flex flex-col bg-gradient-to-br from-cyan-200 to-indigo-200">
-			<ul class="max-w-[600px] grow self-center bg-white/65 space-y-4">
+			<ul class="max-w-[680px] grow self-center bg-white/65 space-y-4">
 				<li v-for="message in messages" class="flex flex-col">
-					<div class="">
-						<div class="">
+					<div class="flex flex-col">
+						<div class="grow-0" @click="()=>{onsigneraddressclick(message.signerAddress);}">
+							{{message.signerAddress}}
+						</div>
+						<div class="grow-0">
 							{{new Date(message.timestamp).toLocaleString()}}
 						</div>
 					</div>
@@ -110,4 +141,7 @@ async function submit(){
 			</form>
 		</div>
 	</div>
+	<Modal v-model="transferTransactionModalIsOpen">
+		<TransferTransaction :recipientAddress="recipientAddress" @announce="announce"/>
+	</Modal>
 </template>

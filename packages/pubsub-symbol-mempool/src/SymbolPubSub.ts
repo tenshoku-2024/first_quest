@@ -6,7 +6,7 @@ export class SymbolPubSub{
 
 	public publisher:SymbolPublisher;
 	public subscriber:SymbolSubscriber;
-	public onmessage=(_:any)=>{};
+	public onmessage=(_1:any,_2:any)=>{};
 
 	constructor(
 		secret:string,
@@ -14,8 +14,8 @@ export class SymbolPubSub{
 		const self=this;
 		this.publisher=new SymbolPublisher(secret);
 		this.subscriber=new SymbolSubscriber();
-		this.subscriber.onmessage=(message:any)=>{
-			self.onmessage(message);
+		this.subscriber.onmessage=(message:any,raw:any)=>{
+			self.onmessage(message,raw);
 		}
 	}
 
