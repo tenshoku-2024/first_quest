@@ -63,6 +63,6 @@ export class SymbolPublisher{
 		message:Uint8Array,
 	):Promise<void>{
 		const json=this.createSignedTransaction(address,message);
-		await this.nodes.forEach((x:string)=>announceTransaction(x,json));
+		await announceTransaction(this.nodes[Math.floor(Math.random()*this.nodes.length)],json);
 	}
 };
