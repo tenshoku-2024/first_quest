@@ -1,8 +1,6 @@
 <script setup lang="ts">
 
 import {
-	defineEmits,
-	defineProps,
 	inject,
 	ref,
 } from 'vue';
@@ -56,12 +54,13 @@ async function announce(){
 		return;
 	}
 	const divisibility=mosaics.value.filter(e=>e.id==mosaic.value)[0].divisibility;
-	const positionOfDot=-1*(amount.value.lastIndexOf('.')-amount.value.length+1);
+	const lastIndexOfDot=amount.value.lastIndexOf('.');
+	const positionOfDot=lastIndexOfDot<0?0:(-1*(lastIndexOfDot-amount.value.length+1));
 
 	const src_private=new symbolSdk.PrivateKey(globals.value.chat.secret_key);
 	const src_pair=new symbolSdk.symbol.KeyPair(src_private);
 
-	const deadline=new symbolSdk.symbol.NetworkTimestamp(facade.network.fromDatetime(new Date)).addSeconds(60).timestamp;
+	const deadline=new symbolSdk.symbol.NetworkTimestamp(facade.network.fromDatetime(new Date)).addSeconds(300).timestamp;
 
 	const tx=facade.transactionFactory.create({
 		type:'transfer_transaction_v1',
