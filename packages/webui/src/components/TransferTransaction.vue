@@ -9,7 +9,7 @@ import {
 
 import symbolSdk from 'symbol-sdk';
 
-const globals=inject('globals');
+const globals=inject('globals') as any;
 
 const props=defineProps<{
 	recipientAddress:string,
@@ -28,7 +28,7 @@ const amount=ref('0');
 
 const facade=new symbolSdk.facade.SymbolFacade('testnet');
 
-const mosaics=ref(undefined);
+const mosaics=ref(<any[]|undefined>undefined);
 const mosaic=ref('');
 (async()=>{
 	const json=await fetch(
@@ -37,7 +37,7 @@ const mosaic=ref('');
 		.then(response=>response.json());
 	mosaics.value=await Promise.all(
 		json.account.mosaics.map(
-			async(e)=>{
+			async(e:any)=>{
 				const json=await fetch(
 					nodeOrigin+'/mosaics/'+e.id,
 				)
@@ -52,12 +52,14 @@ const mosaic=ref('');
 })();
 
 async function announce(){
+	if(mosaics.value==undefined){
+		return;
+	}
 	const divisibility=mosaics.value.filter(e=>e.id==mosaic.value)[0].divisibility;
 	const positionOfDot=-1*(amount.value.lastIndexOf('.')-amount.value.length+1);
 
 	const src_private=new symbolSdk.PrivateKey(globals.value.chat.secret_key);
 	const src_pair=new symbolSdk.symbol.KeyPair(src_private);
-	const src_address=facade.network.publicKeyToAddress(src_pair.publicKey);
 
 	const deadline=new symbolSdk.symbol.NetworkTimestamp(facade.network.fromDatetime(new Date)).addSeconds(60).timestamp;
 

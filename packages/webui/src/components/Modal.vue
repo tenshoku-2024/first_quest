@@ -2,7 +2,6 @@
 
 import {
 	defineModel,
-	ref,
 } from 'vue';
 
 const show=defineModel();
