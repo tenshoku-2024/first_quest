@@ -15,6 +15,7 @@ import symbolSdk from 'symbol-sdk';
 
 import TransferTransaction from '@/components/TransferTransaction.vue';
 import Modal from '@/components/Modal.vue';
+import ExtremelyPoliteHeader from '@/components/ExtremelyPoliteHeader.vue';
 
 const router=useRouter();
 const globals:any=inject('globals')
@@ -116,6 +117,7 @@ function announce(){
 
 <template>
 	<div class="w-screen h-screen flex flex-col">
+		<ExtremelyPoliteHeader/>
 		<div ref="log" class="overflow-scroll grow flex flex-col bg-gradient-to-br from-cyan-200 to-indigo-200">
 			<ul class="max-w-[680px] grow self-center bg-white/65 space-y-4">
 				<li v-for="message in messages" class="flex flex-col">
