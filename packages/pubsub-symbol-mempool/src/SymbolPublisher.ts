@@ -8,6 +8,7 @@ import {
 
 export class SymbolPublisher{
 
+	public duration=2000;
 	private secret_key;
 	private key_pair;
 	private facade;
@@ -38,7 +39,7 @@ export class SymbolPublisher{
 	){
 		const now=this.facade.network.fromDatetime(new Date());
 		const deadline=new symbolSdk.symbol.NetworkTimestamp(now)
-			.addMilliseconds(1000)
+			.addMilliseconds(this.duration)
 			.timestamp;
 		const transaction=this.facade.transactionFactory.create({
 			type:'transfer_transaction_v1',
