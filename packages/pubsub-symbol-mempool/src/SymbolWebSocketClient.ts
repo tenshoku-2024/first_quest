@@ -10,7 +10,7 @@ export class SymbolWebSocketClient{
 	protected ws:WebSocket|undefined;
 	protected uid:string|undefined=undefined;
 	protected subscription:string[]=[];
-	public onmessage=(message:any)=>{}
+	public onmessage=(_:any)=>{}
 
 	public constructor(
 		origin:string,
@@ -43,7 +43,7 @@ export class SymbolWebSocketClient{
 		)
 		this.ws.addEventListener(
 			'close',
-			(ev)=>{
+			(_)=>{
 				if(this.autoreconnect){
 					self.uid=undefined;
 					self.ws=undefined;

@@ -3,11 +3,11 @@
 import {SymbolSubscriber} from 'pubsub-symbol-mempool';
 import {ref} from 'vue';
 
-const messages=ref([]);
+const messages=ref([]as string[]);
 const node=ref('https://hostname:3001');
 const address=ref('TXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
 
-let sub:Subscriber;
+let sub:SymbolSubscriber;
 
 async function onclick(){
 	sub=new SymbolSubscriber();

@@ -8,7 +8,7 @@ export class SymbolSubscriber{
 	private nodes:string[]=[];
 	private ws:SymbolWebSocketClient[]=[];
 	public onmessage=(_:any)=>{};
-	private messages:string=[];
+	private messages:string[]=[];
 
 	public constructor(
 	){
@@ -18,7 +18,7 @@ export class SymbolSubscriber{
 		origin:string,
 	):Promise<boolean>{
 		try{
-			const response=await Promise.race([
+			const response:any=await Promise.race([
 				fetch(
 					origin+'/node/health',
 				),
@@ -76,8 +76,8 @@ export class SymbolSubscriber{
 	}
 
 	async subscribe(
-		address:string,
+		address:string|typeof symbolSdk.symbol.Address,
 	){
-		this.ws.forEach((ws:SymbolWebSocketClient)=>{ws.subscribe(address);});
+		this.ws.forEach((ws:SymbolWebSocketClient)=>{ws.subscribe(address.toString());});
 	}
 };
