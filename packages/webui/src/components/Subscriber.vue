@@ -12,7 +12,7 @@ let sub:SymbolSubscriber;
 async function onclick(){
 	sub=new SymbolSubscriber();
 	sub.onmessage=(msg:any)=>{
-		messages.value.push(msg.data.meta.hash);
+		messages.value.push(new TextDecoder().decode(msg));
 		messages.value=messages.value.splice(-5);
 	};
 	await sub.start([node.value]);
@@ -29,7 +29,7 @@ async function onclick(){
 		<div>
 			Subscribeボタンを押すと、下に入力したノードに接続して、そのノードが知っているノードのリストを受け取ります。
 			その中から接続できるノードを選んで、下に入力したアドレスが関係するtransactionが来た時に教えてもらいます。
-			transactionが来たら下にhashが並びます。
+			messageつきのtransactionが来たら下にmessageが並びます。
 		</div>
 		<div class="">
 			最初に接続するノード:<input v-model="node" class="rounded border-blue-500 border-2" type="text" />
@@ -43,7 +43,7 @@ async function onclick(){
 			</button>
 		</div>
 		<h3>
-			届いたtransactionのhash（最新５件）:
+			届いたmessage（最新５件）:
 		</h3>
 		<div v-for="message in messages">
 			{{message}}

@@ -50,6 +50,12 @@ export class SymbolSubscriber{
 			.filter((_:any,i:number)=>passed[i].status==='fulfilled'&&passed[i]!.value);
 	}
 
+	static hexToUint8Array(
+		hex:string,
+	):Uint8Array{
+		return Uint8Array.from((hex.match(/../g)??[]).map((x:string)=>'0x'+x).map((x:string)=>Number.parseInt(x)));
+	}
+
 	private onmessageInternal(
 		msg:any,
 	){
@@ -57,7 +63,9 @@ export class SymbolSubscriber{
 		if(this.messages.indexOf(hash)<0){
 			this.messages.push(hash);
 			this.messages=this.messages.splice(-5);
-			this.onmessage(msg);
+			if(msg.data.transaction.message!==undefined){
+				this.onmessage(SymbolSubscriber.hexToUint8Array(msg.data.transaction.message));
+			}
 		}
 	}
 
