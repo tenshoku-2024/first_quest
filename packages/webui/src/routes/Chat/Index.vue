@@ -44,7 +44,7 @@ function scroll(){
 }
 
 if(pubsub===undefined){
-	router.push('/');
+	router.push('/chat/login');
 }else{
 	heliaStrings=strings(helia);
 	heliaCbor=dagCbor(helia);

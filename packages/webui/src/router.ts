@@ -14,7 +14,12 @@ const router=createRouter({
 		{
 			path:'/chat',
 			name:'chat',
-			component:()=>import('@/routes/Chat.vue'),
+			component:()=>import('@/routes/Chat/Index.vue'),
+		},
+		{
+			path:'/chat/login',
+			name:'chatLogin',
+			component:()=>import('@/routes/Chat/Login.vue'),
 		},
 		{
 			path:'/kuyou',

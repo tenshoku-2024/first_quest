@@ -1,32 +1,11 @@
 <script setup lang="ts">
 
-import {
-	inject,
-	ref,
-} from 'vue';
+import ExtremelyPoliteLayout from '@/components/ExtremelyPoliteLayout.vue';
 
-import {useRouter} from 'vue-router';
-
-import {SymbolPubSub} from 'pubsub-symbol-mempool';
-
-const router=useRouter();
-const globals:any=inject('globals');
-const secret_key=ref('');
-const node_origin=ref('https://localhost:3001');
-
-function connect(){
-	const pubsub=new SymbolPubSub(secret_key.value);
-	globals.value.chat.pubsub=pubsub;
-	(async()=>{
-		await pubsub.start([node_origin.value]);
-		pubsub.subscribe(globals.value.symbolAddress)
-		router.push('/chat');
-	})();
-}
 </script>
 
 <template>
-	<header>
+	<ExtremelyPoliteLayout>
 		<div class="min-h-screen bg-gradient-to-br to-cyan-900 from-black grid grid-rows-4 grid-cols-1 items-center">
 			<div>
 				<h2 class="text-8xl font-black bg-gradient-to-br from-cyan-300 to-blue-500 inline-block text-transparent bg-clip-text">
@@ -49,81 +28,39 @@ function connect(){
 				</p>
 			</div>
 		</div>
-	</header>
-	<main>
-		<div class="min-h-screen w-screen bg-gradient-to-br from-rose-900 to-black grid grid-rows-1 grid-cols-1 justify-items-center items-center">
-			<div class="text-black p-8 text-[16pt] max-w-screen justify-self-right rounded-2xl bg-gray-300">
-				<h3 class="text-4xl border-b-2 border-gray-500">
-					はじめる
-				</h3>
-				<div>
-					<h6 class="">
-						秘密鍵
-					</h6>
+		<div class="min-h-screen bg-gradient-to-br to-fuchsia-900 from-black grid grid-rows-4 grid-cols-1 items-center">
+			<div>
+				<h2 class="text-8xl font-black bg-gradient-to-br from-rose-200 to-blue-500 inline-block text-transparent bg-clip-text">
+					PubSubを
+				</h2>
+			</div>
+			<div class="justify-self-center">
+				<h2 class="text-8xl font-black bg-gradient-to-br from-rose-200 to-blue-500 inline-block text-transparent bg-clip-text">
+					Symbolで
+				</h2>
+			</div>
+			<div class="justify-self-end">
+				<h2 class="text-8xl font-black bg-gradient-to-br from-rose-200 to-blue-500 inline-block text-transparent bg-clip-text">
+					より単純に
+				</h2>
+			</div>
+			<div class="flex flex-row">
+				<div class="text-white p-8 text-[16pt] w-[45%]">
+					<p>
+						Libp2pのGossipsubではブラウザ同士のWANを越えた通信が困難でした。
+					</p>
+					<p>
+						そこでSymbolのmempoolを使ったPubSubを実現し、お披露目も兼ねてチャットを作りました。
+					</p>
 				</div>
-				<div>
-					<input type="password" v-model="secret_key" class="w-full"/>
-				</div>
-				<div>
-					<h6 class="">
-						テストネットのノード
-					</h6>
-				</div>
-				<div>
-					<input type="text" v-model="node_origin" class="w-full"/>
-				</div>
-				<div class="grid grid-col-1 grid-row-1 my-2">
-					<button @click="connect" class="rounded-xl border-2 border-blue-500 bg-white p-[2px] justify-self-end w-fit">
-						接続
-					</button>
+				<div class="text-white p-8 text-[16pt] w-[45%] flex justify-center items-center align-items-center">
+					<router-link to="/chat">
+						<button class="rounded-2xl bg-white text-blue-500 border-4 border-blue-500 p-2 grow-0">
+							Flyerをはじめる
+						</button>
+					</router-link>
 				</div>
 			</div>
 		</div>
-	</main>
-	<footer class="text-white bg-gradient-to-br from-blue-700 to-cyan-500">
-		<h2 class="text-6xl p-10">
-			作りかけ本番環境Flyer
-		</h2>
-		<div class="flex justify-center p-4 flex-row space-x-8">
-			<div class="min-w-[30%]">
-				<h3 class="text-xl">
-					開発者向け
-				</h3>
-				<ul>
-					<li>
-						<router-link to="/kuyou" class="underline">
-							隠し機能
-						</router-link>
-					</li>
-					<li>
-						<a href="/source.tar.zst" class="underline">
-							ソースコード
-						</a>
-					</li>
-				</ul>
-			</div>
-			<div class="min-w-[30%]">
-				<h3 class="text-xl">
-					関連
-				</h3>
-				<ul>
-					<li>
-						<a href="https://twitter.com/doce_frailes" class="underline">
-							作者のTwitter
-						</a>
-					</li>
-					<li>
-						<a href="https://quest-bc.com/quest/EXeNEv4muvytfGFHMRZG" class="underline">
-							これのQUESTのページ
-						</a>
-					</li>
-					<li>
-						<a href="https://hackathon-2024.nemtus.com" class="underline">
-							提出先のハッカソン
-						</a>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</footer>
+	</ExtremelyPoliteLayout>
 </template>
