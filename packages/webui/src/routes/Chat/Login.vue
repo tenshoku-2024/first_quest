@@ -17,6 +17,7 @@ const secret_key=ref('');
 const node_origin=ref('https://localhost:3001');
 
 function connect(){
+	globals.value.chat.secret_key=secret_key.value;
 	const pubsub=new SymbolPubSub(secret_key.value);
 	globals.value.chat.pubsub=pubsub;
 	(async()=>{

@@ -13,8 +13,13 @@ import {CID} from 'multiformats/cid';
 import {identity} from 'multiformats/hashes/identity';
 import symbolSdk from 'symbol-sdk';
 
+import TransferTransaction from '@/components/TransferTransaction.vue';
+import Modal from '@/components/Modal.vue';
+
 const router=useRouter();
 const globals:any=inject('globals')
+const recipientAddress=ref('');
+const transferTransactionModalIsOpen=ref(false);
 const log=ref();
 const message=ref('');
 const messages=ref<any[]>(
@@ -98,6 +103,15 @@ async function submit(){
 	message.value='';
 }
 
+function onsigneraddressclick(signerAddress:string){
+	recipientAddress.value=signerAddress;
+	transferTransactionModalIsOpen.value=true;
+}
+
+function announce(){
+	transferTransactionModalIsOpen.value=false;
+}
+
 </script>
 
 <template>
@@ -106,7 +120,7 @@ async function submit(){
 			<ul class="max-w-[680px] grow self-center bg-white/65 space-y-4">
 				<li v-for="message in messages" class="flex flex-col">
 					<div class="flex flex-col">
-						<div class="grow-0">
+						<div class="grow-0" @click="()=>{onsigneraddressclick(message.signerAddress);}">
 							{{message.signerAddress}}
 						</div>
 						<div class="grow-0">
@@ -125,4 +139,7 @@ async function submit(){
 			</form>
 		</div>
 	</div>
+	<Modal v-model="transferTransactionModalIsOpen">
+		<TransferTransaction :recipientAddress="recipientAddress" @announce="announce"/>
+	</Modal>
 </template>
