@@ -7,10 +7,13 @@
 		"preview":"vite preview --host 0.0.0.0 --port 3000"
 	},
 	"dependencies":{
+		"@helia/dag-cbor":"^3.0.0",
+		"@helia/strings":"^3.0.0",
 		"@mdi/js":"^7.4.47",
 		"@esbuild-plugins/node-globals-polyfill":"^0.2.3",
 		"assert":"*",
 		"buffer":"*",
+		"multiformats":"^13.1.0",
 		"pubsub-symbol-mempool":"file:packages/pubsub-symbol-mempool",
 		"symbol-crypto-wasm-web":"^0.1.1",
 		"vue":"^3.4.19",

@@ -20,7 +20,6 @@ function connect(){
 		await symp2p.start([node_origin.value]);
 		router.push('/chat');
 		symp2p.subscribe(globals.value.symbolAddress)
-		await symp2p.advertise();
 	})();
 	globals.value.symp2p=symp2p;
 }

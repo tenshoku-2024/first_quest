@@ -8,7 +8,7 @@ import {
 
 export class SymbolPublisher{
 
-	public duration=2000;
+	public duration=2500;
 	private secret_key;
 	private key_pair;
 	private facade;

@@ -13,7 +13,7 @@ import {
 
 import {SymbolPubSub} from 'pubsub-symbol-mempool';
 
-const heliaNodes=[
+export const heliaNodes=[
 	'/dns4/node0.preload.ipfs.io/tcp/443/wss/p2p/QmZMxNdpMkewiVZLMRxaNxUeZpDUb34pWjZ1kZvsd16Zic',
 	'/dns4/node1.preload.ipfs.io/tcp/443/wss/p2p/Qmbut9Ywz9YEDrz8ySBSgWyJk41Uvm2QJPhwDJzJyGFsD6',
 	'/dns4/node2.preload.ipfs.io/tcp/443/wss/p2p/QmV7gnbW5VTcJ3oyM2Xk1rdFBJ3kTkvxc87UFGsun29STS',
@@ -59,6 +59,11 @@ export class Symp2p{
 		};
 	}
 
+	async dialLibp2pNodes(
+	):Promise<void>{
+		await Promise.race(heliaNodes.map((x:string)=>this.helia.libp2p.dial(multiaddr(x))),);
+	}
+
 	async start(
 		symbolNodes:string[],
 	):Promise<void>{
@@ -70,7 +75,7 @@ export class Symp2p{
 				libp2p:libp2pOptions,
 			},
 		);
-		heliaNodes.forEach((x)=>{this.helia.libp2p.dial(multiaddr(x))});
+		this.dialLibp2pNodes();
 		this.symbolNodes=this.symbolNodes.concat(symbolNodes);
 		await Promise.allSettled([
 			this.symbolPubSub.start(this.symbolNodes),
@@ -111,6 +116,9 @@ export class Symp2p{
 			.filter((e:Multiaddr)=>e.protos().filter((f:any)=>f.name==='dns4'||f.name==='dns6').length>0)
 			.map((e:Multiaddr)=>e.toString())
 			.splice(0,this.maxNumberOfMultiaddrsInAdvertisement);
+		if(addresses.length==0){
+			return;
+		}
 		const advertisement=JSON.stringify(addresses);
 		await Promise.all(
 			this.symbolAddresses.map(
