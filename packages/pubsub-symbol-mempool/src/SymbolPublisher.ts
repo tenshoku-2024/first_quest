@@ -12,7 +12,7 @@ export class SymbolPublisher{
 	private key_pair;
 	private facade;
 	private network:string='testnet';
-	private nodes:string[]=[];
+	public nodes:string[]=[];
 
 	public constructor(
 		secret:string,

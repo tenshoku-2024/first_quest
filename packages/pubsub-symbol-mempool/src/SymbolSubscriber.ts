@@ -8,7 +8,7 @@ import symbolSdk from 'symbol-sdk';
 
 export class SymbolSubscriber{
 
-	private nodes:string[]=[];
+	public nodes:string[]=[];
 	private ws:SymbolWebSocketClient[]=[];
 	public onmessage=(_:any)=>{};
 	private messages:string[]=[];
