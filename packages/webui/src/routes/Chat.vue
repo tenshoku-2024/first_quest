@@ -32,7 +32,12 @@ let heliaStrings:any;
 let heliaCbor:any;
 
 function scroll(){
-	log.value.scrollTo(0,log.value.scrollHeight);
+	setTimeout(
+		()=>{
+			log.value.scrollTo(0,log.value.scrollHeight);
+		},
+		100,
+	);
 }
 
 if(pubsub===undefined){
